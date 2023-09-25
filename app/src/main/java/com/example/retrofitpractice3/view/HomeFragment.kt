@@ -19,7 +19,6 @@ class HomeFragment : Fragment(), OnClickListener {
     private val binding get() = _binding!!
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +39,7 @@ class HomeFragment : Fragment(), OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v) {
+        when (v) {
             binding.floatingActionButton -> {
                 RetrofitManager.instance.requestData { data ->
                     if (data != null) {
@@ -55,26 +54,26 @@ class HomeFragment : Fragment(), OnClickListener {
     }
 
     private fun setDataToViews(data: Root) {
+
         // 받아온 데이터를 뷰에 설정
-        activity?.runOnUiThread {
-            // 받아온 데이터를 뷰에 설정
-            binding.nameText.text = "${data.results[0].name.first} ${data.results[0].name.last}"
-            binding.usernameText.text = data.results[0].login.username
-            binding.ageText.text = data.results[0].dob.age.toString()
-            binding.emailText.text = data.results[0].email
-            binding.phoneText.text = data.results[0].phone
-            binding.addrText.text = "${data.results[0].location.street.number} ${data.results[0].location.street.name}, ${data.results[0].location.city}, ${data.results[0].location.state}, ${data.results[0].location.country}, ${data.results[0].location.postcode}"
-            binding.dobText.text = formatDate(data.results[0].dob.date)
+        binding.nameText.text = "${data.results[0].name.first} ${data.results[0].name.last}"
+        binding.usernameText.text = data.results[0].login.username
+        binding.ageText.text = data.results[0].dob.age.toString()
+        binding.emailText.text = data.results[0].email
+        binding.phoneText.text = data.results[0].phone
+        binding.addrText.text =
+            "${data.results[0].location.street.number} ${data.results[0].location.street.name}, ${data.results[0].location.city}, ${data.results[0].location.state}, ${data.results[0].location.country}, ${data.results[0].location.postcode}"
+        binding.dobText.text = formatDate(data.results[0].dob.date)
 
 
-            Glide.with(this)
-                .load(data.results[0].picture.large)
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_error)
-                .override(400, 400)
-                .into(binding.imageView)
-            // 나머지 항목도 필요한 대로 설정해주세요
-        }
+        Glide.with(this)
+            .load(data.results[0].picture.large)
+            .placeholder(R.drawable.ic_placeholder)
+            .error(R.drawable.ic_error)
+            .override(400, 400)
+            .into(binding.imageView)
+        // 나머지 항목도 필요한 대로 설정해주세요
+
     }
 
     fun formatDate(inputDate: String): String {
